@@ -1,0 +1,51 @@
+{% extends '_base.html' %}
+
+{% block page_content %}
+<div class="page-header">
+  <h1>Users cities</h1>
+</div>
+{% include 'messages.html' %}
+
+<button type="button" class="btn btn-primary" id="selectButton" onclick="toggle()">Select all</button>
+<button type="submit" class="btn btn-danger" form="citiesForm" id="deleteButton">Delete</button>
+<hr>
+
+<form action="{{ url_for('weather.delete_city') }}" method="post" id="citiesForm">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="table-responsive col-md-4">
+    <table class="table table-hover table-striped" id="citiesTable">
+      <thead>
+      <tr>
+        <th class="col">Select</th>
+        <th class="col">#</th>
+        <th class="col">City</th>
+        <th class="col">Country</th>
+        <th class="col">Flag</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for user_city in cities %}
+      <tr>
+        <td>
+          <input type="checkbox" name="selectors" class="checkbox" value="{{ user_city.city.id }}">
+        </td>
+        <td>{{ loop.index }}</td>
+        <td>
+          <a href="{{ url_for('weather.show_city_detail', city_name=user_city.city.name) }}">
+            {{ user_city.city.name }}
+          </a>
+        </td>
+        <td>
+          <a href="{{ url_for('weather.show_city', country=user_city.city.country.name) }}">
+            {{ user_city.city.country.name }}
+          </a>
+        </td>
+        <td class="bg-info"><img src="{{ user_city.city.country.flag }}" alt="" width="60" height="40"></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</form>
+{% endblock page_content %}
+

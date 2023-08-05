@@ -1,0 +1,17 @@
+{% extends '_base.html' %}
+
+{% block page_content %}
+<div class="page-header">
+  <h1>{{ title }}</h1>
+</div>
+
+<div class="table-responsive col-md-4">
+    {% include 'weather/_weather_table.html' %}
+</div>
+
+<div class="table-responsive col-md-4">
+    <h3>Country {{ country.name }}</h3>
+    <p><img src="{{ country.flag }}" alt=""></p>
+    <p>{{ country.description }}</p>
+</div>
+{% endblock page_content %}

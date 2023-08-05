@@ -1,0 +1,41 @@
+{% extends '_base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block page_content %}
+<div class="page-header">
+  <h1>Show weather info about city</h1>
+  {% include 'messages.html' %}
+</div>
+
+<div class="col-md-4">
+  <form action="" method="post">
+    {{ form.csrf_token }}
+    {{ wtf.form_field(form.city_name) }}
+    {{ wtf.form_field(form.submit) }}
+  </form>
+
+  {% if city_weather %}
+  <div class="table-responsive">
+    <h3>Weather info about city {{ city_name.capitalize() }}, {{ country.name }}</h3>
+    {% include 'weather/_weather_table.html' %}
+    <form action="{{ url_for('weather.add_city') }}" method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="city" value="{{ city_name }}">
+      <input type="hidden" name="country" value="{{ country }}">
+      <button type="submit" class="btn btn-primary" id="addCity">Add city</button>
+    </form>
+  </div>
+  {% endif %}
+</div>
+  <div class="col-md-5">
+     <div class="gmap_canvas">
+       <iframe width="400" height="300" id="gmap_canvas"
+               src="https://maps.google.com/maps?q={{ city_name }}&t=&z=9&ie=UTF8&iwloc=&output=embed">
+       </iframe>
+     </div>
+   </div>
+{% endblock page_content %}

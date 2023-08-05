@@ -1,0 +1,9 @@
+.error {
+    background-color: purple;
+    color: antiquewhite;
+    font-weight: bolder;
+}
+
+.divider {
+    height: 200px;
+}

@@ -1,0 +1,23 @@
+{% extends '_base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block page_content %}
+<div class="page-header">
+  <h1>Hello,
+    {% if current_user.is_authenticated %}
+    {{ current_user.username }}
+    {% else %}
+    Anonymous
+    {% endif %}
+  </h1>
+</div>
+<h3>Generate test data</h3>
+{% include 'messages.html' %}
+<h3>{{ message }}</h3>
+<form action="" method="post" class="col-md-1">
+  {{ form.csrf_token }}
+  {{ wtf.form_field(form.qty) }}
+  {{ wtf.form_field(form.submit) }}
+</form>
+
+{% endblock page_content %}
